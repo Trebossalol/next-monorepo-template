@@ -2,6 +2,7 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { User, Settings, LogOut, ChevronUp } from "lucide-react"
 import {
     Sidebar,
     SidebarContent,
@@ -17,6 +18,15 @@ import {
     SidebarProvider,
     SidebarRail
 } from "@workspace/ui/components/sidebar"
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from "@workspace/ui/components/dropdown-menu"
+import { Avatar, AvatarFallback, AvatarImage } from "@workspace/ui/components/avatar"
 import { sidebarMenuItems } from "@/components/app/sidebar"
 import { APP_NAME } from "@workspace/common/constants"
 import { NextLayoutProps } from "@/types/next"
@@ -61,9 +71,44 @@ export default function AppSidebar({ children }: NextLayoutProps) {
                     </SidebarGroup>
                 </SidebarContent>
                 <SidebarFooter>
-                    <div className="px-2 py-2 text-xs text-muted-foreground">
-                        © 2024 {APP_NAME}
-                    </div>
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <button className="flex items-center gap-2 rounded-lg px-2 py-2 text-left hover:bg-accent w-full transition-colors">
+                                <Avatar className="size-8">
+                                    <AvatarImage src="" alt="User" />
+                                    <AvatarFallback>
+                                        <User className="size-4" />
+                                    </AvatarFallback>
+                                </Avatar>
+                                <div className="flex flex-col flex-1 min-w-0">
+                                    <span className="text-sm font-medium truncate">John Doe</span>
+                                    <span className="text-xs text-muted-foreground truncate">john.doe@example.com</span>
+                                </div>
+                                <ChevronUp className="size-4 text-muted-foreground shrink-0" />
+                            </button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end" className="w-56">
+                            <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem asChild>
+                                <Link href="/app/profile" className="flex items-center gap-2">
+                                    <User className="size-4" />
+                                    <span>Profile</span>
+                                </Link>
+                            </DropdownMenuItem>
+                            <DropdownMenuItem asChild>
+                                <Link href="/app/settings" className="flex items-center gap-2">
+                                    <Settings className="size-4" />
+                                    <span>Settings</span>
+                                </Link>
+                            </DropdownMenuItem>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem variant="destructive" className="flex items-center gap-2">
+                                <LogOut className="size-4" />
+                                <span>Log out</span>
+                            </DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
                 </SidebarFooter>
                 <SidebarRail />
             </Sidebar>
