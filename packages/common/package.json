@@ -1,0 +1,21 @@
+{
+    "name": "@workspace/common",
+    "version": "0.0.0",
+    "type": "module",
+    "private": true,
+    "exports": {
+        "./*": "./src/*.ts"
+    },
+    "scripts": {
+        "lint": "eslint . --max-warnings 0"
+    },
+    "dependencies": {
+        "@t3-oss/env-nextjs": "^0.13.10",
+        "zod": "^3.25.76"
+    },
+    "devDependencies": {
+        "@types/node": "^25.0.2",
+        "@workspace/eslint-config": "workspace:^",
+        "@workspace/typescript-config": "workspace:*"
+    }
+}
