@@ -27,7 +27,7 @@ import {
     DropdownMenuTrigger,
 } from "@workspace/ui/components/dropdown-menu"
 import { Avatar, AvatarFallback, AvatarImage } from "@workspace/ui/components/avatar"
-import { sidebarMenuItems } from "@/components/app/sidebar"
+import { sidebarMenuItems } from "@/components/app/links"
 import { APP_NAME } from "@workspace/common/constants"
 import { NextLayoutProps } from "@/types/next"
 import { routes } from "@workspace/common/routes"
@@ -42,7 +42,7 @@ export default function AppSidebar({ children }: NextLayoutProps) {
 
     return (
         <SidebarProvider>
-            <Sidebar variant="floating">
+            <Sidebar>
                 <SidebarHeader>
                     <div className="flex items-center gap-2 px-2 py-2">
                         <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
@@ -67,7 +67,7 @@ export default function AppSidebar({ children }: NextLayoutProps) {
                                                 isActive={pathname === item.url}
                                             >
                                                 <Link href={item.url}>
-                                                    <item.icon />
+                                                    <item.Icon />
                                                     <span>{item.title}</span>
                                                 </Link>
                                             </SidebarMenuButton>

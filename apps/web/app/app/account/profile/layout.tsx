@@ -2,6 +2,7 @@ import React, { ReactNode } from 'react'
 import { AnnotatedLayout, AnnotatedSection } from '@workspace/ui/components/annotated'
 import { Page, PageBody, PageHeader, PagePrimaryBar } from '@workspace/ui/components/page'
 import { NextLayoutProps } from '@/types/next'
+import AccountNavDropdown from '@/components/app/account/account-nav-dropdown'
 
 export default function AccountProfileLayout({ personalDetails }: NextLayoutProps & {
     personalDetails: ReactNode
@@ -10,7 +11,7 @@ export default function AccountProfileLayout({ personalDetails }: NextLayoutProp
         <Page>
             <PageHeader>
                 <PagePrimaryBar>
-                    Profile
+                    <AccountNavDropdown />
                 </PagePrimaryBar>
             </PageHeader>
             <PageBody>
