@@ -25,6 +25,12 @@
     ],
     "onlyBuiltDependencies": [
       "msw"
-    ]
+    ],
+    "peerDependencyRules": {
+      "allowedVersions": {
+        "@prisma/client": "7",
+        "zod": "3"
+      }
+    }
   }
 }

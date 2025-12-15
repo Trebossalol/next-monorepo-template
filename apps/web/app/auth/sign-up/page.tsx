@@ -27,9 +27,11 @@ import { EyeIcon, EyeOffIcon } from "lucide-react";
 import { Button } from "@workspace/ui/components/button";
 import { signUp } from "@/actions/auth/sign-up";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 export default function RegisterPage() {
     const [showPassword, setShowPassword] = useState(false);
+    const router = useRouter();
 
     const form = useForm<SignUpSchema>({
         resolver: zodResolver(signUpSchema),
@@ -43,6 +45,12 @@ export default function RegisterPage() {
     const onSubmit = async (data: SignUpSchema) => {
         const result = await signUp(data);
         if (result.serverError) toast.error(result.serverError);
+        else {
+            toast.success('Account created successfully', {
+                description: 'You are beeing redirected to the application.'
+            })
+            router.push(routes.web.app.Index)
+        }
     }
 
     return (
