@@ -8,7 +8,7 @@ export async function proxy() {
         headers: await headers()
     })
 
-    if (!session) return NextResponse.redirect(routes.web.auth.Login);
+    if (!session) return NextResponse.redirect(routes.web.auth.SignIn);
 
     return NextResponse.next();
 }

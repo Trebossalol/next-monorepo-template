@@ -8,8 +8,11 @@ export const routes = {
     web: {
         Index: `${baseUrl.Web}/`,
         auth: {
-            Login: `${baseUrl.Web}/auth/login`,
-            Register: `${baseUrl.Web}/auth/register`,
+            SignIn: `${baseUrl.Web}/auth/sign-in`,
+            SignUp: `${baseUrl.Web}/auth/sign-up`,
+        },
+        app: {
+            Index: `${baseUrl.Web}/app`,
         }
     }
 } as const
