@@ -31,13 +31,17 @@ import { sidebarMenuItems } from "@/components/app/links"
 import { APP_NAME } from "@workspace/common/constants"
 import { NextLayoutProps } from "@/types/next"
 import { routes } from "@workspace/common/routes"
-import { authClient } from "@workspace/auth/lib/auth-client"
+import { useSession, signOut } from "@workspace/auth/lib/auth-client"
+import { Skeleton } from "@workspace/ui/components/skeleton"
 
 export default function AppSidebar({ children }: NextLayoutProps) {
     const pathname = usePathname()
+    const session = useSession()
+
+    const isPending = session.isPending
 
     async function handleSignOut() {
-        authClient.signOut()
+        signOut()
     }
 
     return (
@@ -87,11 +91,21 @@ export default function AppSidebar({ children }: NextLayoutProps) {
                                         <User className="size-4" />
                                     </AvatarFallback>
                                 </Avatar>
-                                <div className="flex flex-col flex-1 min-w-0">
-                                    <span className="text-sm font-medium truncate">John Doe</span>
-                                    <span className="text-xs text-muted-foreground truncate">john.doe@example.com</span>
-                                </div>
-                                <ChevronUp className="size-4 text-muted-foreground shrink-0" />
+                                {isPending ? (
+                                    <Skeleton className="h-8 flex-1" />
+                                ) : (
+                                    <>
+                                        <div className="flex flex-col flex-1 min-w-0">
+                                            <span className="text-sm font-medium truncate">
+                                                {session.data?.user.name}
+                                            </span>
+                                            <span className="text-xs text-muted-foreground truncate">
+                                                {session.data?.user.email}
+                                            </span>
+                                        </div>
+                                        <ChevronUp className="size-4 text-muted-foreground shrink-0" />
+                                    </>
+                                )}
                             </button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end" className="w-56">
