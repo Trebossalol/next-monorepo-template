@@ -74,8 +74,10 @@ function parseUserAgent(userAgent?: string | null): { browser?: string; os?: str
 }
 
 export default function AccountSessionsTable({ sessions }: AccountSessionsTableProps) {
+    const currentSession = authClient.useSession()
+
     const handleDeleteSession = async (session: AccountSessionDto) => {
-        if (session.token === session.token) {
+        if (session.token === currentSession.data?.session.token) {
             toast.error('Cannot delete your current session')
             return
         }
@@ -104,7 +106,7 @@ export default function AccountSessionsTable({ sessions }: AccountSessionsTableP
     return (
         <div className="space-y-4">
             {sessions.map((session) => {
-                const isCurrent = session.token === session.token
+                const isCurrent = session.token === currentSession.data?.session.token
                 const DeviceIcon = getDeviceIcon(session.userAgent)
                 const { browser, os } = parseUserAgent(session.userAgent)
                 const lastActive = formatDate(session.updatedAt)
@@ -112,10 +114,7 @@ export default function AccountSessionsTable({ sessions }: AccountSessionsTableP
                 return (
                     <Card
                         key={session.id}
-                        className={cn(
-                            "transition-all duration-200 hover:shadow-md",
-                            isCurrent && "ring-2 ring-primary ring-offset-2"
-                        )}
+                        className={"transition-all duration-200 hover:shadow-md"}
                     >
                         <CardContent className="p-6">
                             <div className="flex items-start justify-between gap-4">
@@ -168,9 +167,9 @@ export default function AccountSessionsTable({ sessions }: AccountSessionsTableP
                                         size="icon"
                                         onClick={() => handleDeleteSession(session)}
                                         aria-label="Delete session"
-                                        className="shrink-0 text-muted-foreground hover:text-destructive"
+                                        className="shrink-0 text-muted-foreground"
                                     >
-                                        <Trash2 className="size-4" />
+                                        <Trash2 className="size-4 text-destructive" />
                                     </Button>
                                 )}
                             </div>

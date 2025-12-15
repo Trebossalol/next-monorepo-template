@@ -1,49 +1,43 @@
 import React from 'react'
 import { Skeleton } from '@workspace/ui/components/skeleton'
 import { Card, CardContent } from '@workspace/ui/components/card'
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from '@workspace/ui/components/table'
+import { Badge } from '@workspace/ui/components/badge'
 
 export default function SessionsLoadingPage() {
     return (
-        <Card>
-            <CardContent>
-                <Table>
-                    <TableHeader>
-                        <TableRow>
-                            <TableHead className='w-12'>#</TableHead>
-                            <TableHead>Device</TableHead>
-                            <TableHead className='text-right w-16'>Actions</TableHead>
-                        </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                        {Array.from({ length: 5 }).map((_, index) => (
-                            <TableRow key={index}>
-                                <TableCell className='w-12'>
-                                    <Skeleton className="h-4 w-4" />
-                                </TableCell>
-                                <TableCell>
-                                    <div className='flex items-center gap-2'>
-                                        <Skeleton className="h-4 flex-1 max-w-[300px]" />
+        <div className="space-y-4">
+            {Array.from({ length: 3 }).map((_, index) => (
+                <Card key={index} className="transition-all duration-200">
+                    <CardContent className="p-6">
+                        <div className="flex items-start justify-between gap-4">
+                            <div className="flex items-start gap-4 flex-1 min-w-0">
+                                <Skeleton className="w-12 h-12 rounded-lg shrink-0" />
+
+                                <div className="flex-1 min-w-0 space-y-2">
+                                    <div className="flex items-center gap-2 flex-wrap">
+                                        <Skeleton className="h-4 w-48" />
                                         {index === 0 && (
-                                            <Skeleton className="h-5 w-24 rounded-full" />
+                                            <Badge variant="default" className="text-xs">
+                                                Current Session
+                                            </Badge>
                                         )}
                                     </div>
-                                </TableCell>
-                                <TableCell className='text-right w-16'>
-                                    <Skeleton className="h-8 w-8 rounded-md ml-auto" />
-                                </TableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </CardContent>
-        </Card>
+
+                                    <div className="flex flex-wrap items-center gap-4">
+                                        <Skeleton className="h-3 w-32" />
+                                        <Skeleton className="h-3 w-24" />
+                                        <Skeleton className="h-3 w-40" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            {index !== 0 && (
+                                <Skeleton className="h-8 w-8 rounded-md shrink-0" />
+                            )}
+                        </div>
+                    </CardContent>
+                </Card>
+            ))}
+        </div>
     )
 }
