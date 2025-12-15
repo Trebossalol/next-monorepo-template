@@ -1,31 +1,18 @@
-# shadcn/ui monorepo template
+# 🚀 Next Monorepo Template [WORK IN PROGRESS]
 
-This template is for creating a monorepo with shadcn/ui.
+## ✨ Built-In Features
 
-## Usage
+- 🔐 Authentication (Sign in and sign up)
+- 👤 Account Profile & Security Settings
 
-```bash
-pnpm dlx shadcn@latest init
-```
+## 🛠️ Tech Stack
 
-## Adding components
+- ⚡ Turborepo
+- ⚛️ Next.js 16 & React 19
+- 🎨 Shadcn/UI & Tailwind CSS
+- ✅ Next Safe Action
+- 📝 React Hook Form
 
-To add components to your app, run the following command at the root of your `web` app:
+---
 
-```bash
-pnpm dlx shadcn@latest add button -c apps/web
-```
-
-This will place the ui components in the `packages/ui/src/components` directory.
-
-## Tailwind
-
-Your `tailwind.config.ts` and `globals.css` are already set up to use the components from the `ui` package.
-
-## Using components
-
-To use the components in your app, import them from the `ui` package.
-
-```tsx
-import { Button } from "@workspace/ui/components/button"
-```
+Built with ❤️ by [Trebossa](https://github.com/Trebossalol) under MIT License.
