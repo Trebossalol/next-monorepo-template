@@ -13,6 +13,14 @@ export const routes = {
         },
         app: {
             Index: `${baseUrl.Web}/app`,
+            Home: `${baseUrl.Web}/app/home`,
+            configuration: {
+                Index: `${baseUrl.Web}/app/configuration`
+            },
+            account: {
+                Profile: `${baseUrl.Web}/app/account/profile`,
+                Security: `${baseUrl.Web}/app/account/security`
+            }
         }
     }
 } as const

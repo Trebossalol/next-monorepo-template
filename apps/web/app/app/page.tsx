@@ -1,17 +1,6 @@
-import React from 'react'
-import { Page, PageBody, PageHeader, PagePrimaryBar } from '@workspace/ui/components/page'
+import { routes } from "@workspace/common/routes";
+import { redirect } from "next/navigation";
 
 export default function AppPage() {
-    return (
-        <Page>
-            <PageHeader>
-                <PagePrimaryBar>
-                    Title
-                </PagePrimaryBar>
-            </PageHeader>
-            <PageBody>
-                content
-            </PageBody>
-        </Page>
-    )
+    redirect(routes.web.app.Home)
 }

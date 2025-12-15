@@ -1,24 +1,15 @@
-import { Home, Settings, FileText, User } from "lucide-react";
+import { routes } from "@workspace/common/routes";
+import { Home, Settings } from "lucide-react";
 
 export const sidebarMenuItems = [
     {
         title: "Home",
-        url: "/app",
+        url: routes.web.app.Home,
         icon: Home,
     },
     {
-        title: "Documents",
-        url: "/app/documents",
-        icon: FileText
-    },
-    {
-        title: "Profile",
-        url: "/app/profile",
-        icon: User
-    },
-    {
-        title: "Settings",
-        url: "/app/settings",
-        icon: Settings
-    },
+        title: 'Configuration',
+        url: routes.web.app.configuration.Index,
+        icon: Settings,
+    }
 ]

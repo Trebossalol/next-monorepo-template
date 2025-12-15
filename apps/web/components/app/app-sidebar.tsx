@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { User, Settings, LogOut, ChevronUp } from "lucide-react"
+import { User, LogOut, ChevronUp, LockIcon } from "lucide-react"
 import {
     Sidebar,
     SidebarContent,
@@ -30,12 +30,19 @@ import { Avatar, AvatarFallback, AvatarImage } from "@workspace/ui/components/av
 import { sidebarMenuItems } from "@/components/app/sidebar"
 import { APP_NAME } from "@workspace/common/constants"
 import { NextLayoutProps } from "@/types/next"
+import { routes } from "@workspace/common/routes"
+import { authClient } from "@workspace/auth/lib/auth-client"
 
 export default function AppSidebar({ children }: NextLayoutProps) {
     const pathname = usePathname()
+
+    async function handleSignOut() {
+        authClient.signOut()
+    }
+
     return (
         <SidebarProvider>
-            <Sidebar>
+            <Sidebar variant="floating">
                 <SidebarHeader>
                     <div className="flex items-center gap-2 px-2 py-2">
                         <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
@@ -91,19 +98,23 @@ export default function AppSidebar({ children }: NextLayoutProps) {
                             <DropdownMenuLabel>My Account</DropdownMenuLabel>
                             <DropdownMenuSeparator />
                             <DropdownMenuItem asChild>
-                                <Link href="/app/profile" className="flex items-center gap-2">
+                                <Link href={routes.web.app.account.Profile} className="flex items-center gap-2">
                                     <User className="size-4" />
                                     <span>Profile</span>
                                 </Link>
                             </DropdownMenuItem>
                             <DropdownMenuItem asChild>
-                                <Link href="/app/settings" className="flex items-center gap-2">
-                                    <Settings className="size-4" />
-                                    <span>Settings</span>
+                                <Link href={routes.web.app.account.Security} className="flex items-center gap-2">
+                                    <LockIcon className="size-4" />
+                                    <span>Security</span>
                                 </Link>
                             </DropdownMenuItem>
                             <DropdownMenuSeparator />
-                            <DropdownMenuItem variant="destructive" className="flex items-center gap-2">
+                            <DropdownMenuItem
+                                variant="destructive"
+                                className="flex items-center gap-2"
+                                onClick={handleSignOut}
+                            >
                                 <LogOut className="size-4" />
                                 <span>Log out</span>
                             </DropdownMenuItem>
