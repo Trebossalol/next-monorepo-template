@@ -10,7 +10,7 @@ export default function ConfigurationLayout({ section1, section2 }: NextLayoutPr
         <Page>
             <PageHeader>
                 <PagePrimaryBar>
-                    Configuration
+                    Design 1
                 </PagePrimaryBar>
             </PageHeader>
             <PageBody>

@@ -14,8 +14,11 @@ export const routes = {
         app: {
             Index: `${baseUrl.Web}/app`,
             Home: `${baseUrl.Web}/app/home`,
-            configuration: {
-                Index: `${baseUrl.Web}/app/configuration`
+            design1: {
+                Index: `${baseUrl.Web}/app/design1`
+            },
+            design2: {
+                Index: `${baseUrl.Web}/app/design2`
             },
             Docs: `${baseUrl.Web}/app/docs`,
             account: {

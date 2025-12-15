@@ -1,5 +1,5 @@
 import { routes } from "@workspace/common/routes";
-import { Home, Lock, Settings, User } from "lucide-react";
+import { BookOpen, Home, Lock, Paintbrush, User } from "lucide-react";
 
 export const sidebarMenuItems = [
     {
@@ -8,9 +8,19 @@ export const sidebarMenuItems = [
         Icon: Home,
     },
     {
-        title: 'Configuration',
-        url: routes.web.app.configuration.Index,
-        Icon: Settings,
+        title: 'Design 1',
+        url: routes.web.app.design1.Index,
+        Icon: Paintbrush
+    },
+    {
+        title: 'Design 2',
+        url: routes.web.app.design2.Index,
+        Icon: Paintbrush
+    },
+    {
+        title: 'Docs',
+        url: routes.web.app.Docs,
+        Icon: BookOpen
     }
 ]
 
