@@ -6,6 +6,10 @@ export const baseUrl = {
 
 export const routes = {
     web: {
-        Index: `${baseUrl.Web}/`
+        Index: `${baseUrl.Web}/`,
+        auth: {
+            Login: `${baseUrl.Web}/auth/login`,
+            Register: `${baseUrl.Web}/auth/register`,
+        }
     }
 } as const
