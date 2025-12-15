@@ -12,6 +12,14 @@
 - 🎨 Shadcn/UI & Tailwind CSS
 - ✅ Next Safe Action
 - 📝 React Hook Form
+- 🔒 Better Auth
+
+## Development Setuo
+
+```bash
+pnpm install
+pnpm dev
+```
 
 ---
 
