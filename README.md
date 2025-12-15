@@ -16,8 +16,32 @@
 
 ## Development Setuo
 
+### 1. Install Dependencies
+
 ```bash
 pnpm install
+```
+
+### 2. Setup Environment Variables
+
+```bash
+cd apps/web
+cp .env.example .env
+cd ../../packages/database
+cp .env.example .env
+```
+
+### 3. Setup Database
+
+```bash
+docker compose -f docker-compose.dev.yml up -d
+cd packages/database
+pnpm run prisma db push
+```
+
+### 2. Start the Development Server
+
+```bash
 pnpm dev
 ```
 
