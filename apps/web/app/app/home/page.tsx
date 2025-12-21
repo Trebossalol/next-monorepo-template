@@ -1,17 +1,10 @@
 import React from 'react'
 import { Page, PageBody, PageHeader, PagePrimaryBar } from '@workspace/ui/components/page'
-import { auth } from '@workspace/auth/lib/auth'
-import { headers } from 'next/headers'
-import { redirect } from 'next/navigation'
-import { routes } from '@workspace/common/routes'
+import { getSafeAuthSession } from '@/lib/server-utils'
 
 export default async function AppHomePage() {
 
-    const session = await auth.api.getSession({
-        headers: await headers()
-    })
-
-    if (!session) redirect(routes.web.auth.SignIn)
+    const session = await getSafeAuthSession()
 
     return (
         <Page>

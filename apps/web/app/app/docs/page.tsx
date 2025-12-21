@@ -1,16 +1,20 @@
 import { Page, PageBody, PageHeader, PagePrimaryBar } from '@workspace/ui/components/page'
 import React from 'react'
+import { getSafeAuthSession } from '@/lib/server-utils'
 
-export default function DocsPage() {
+export default async function DocsPage() {
+
+    await getSafeAuthSession()
+
     return (
         <Page>
             <PageHeader>
                 <PagePrimaryBar>
-                    Docs
+                    Documentation
                 </PagePrimaryBar>
             </PageHeader>
             <PageBody>
-                Docs
+                More to come...
             </PageBody>
         </Page>
     )

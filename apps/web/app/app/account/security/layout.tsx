@@ -3,7 +3,7 @@ import { AnnotatedLayout, AnnotatedSection } from '@workspace/ui/components/anno
 import { Page, PageBody, PageHeader, PagePrimaryBar } from '@workspace/ui/components/page'
 import { NextLayoutProps } from '@/types/next'
 import { Separator } from '@workspace/ui/components/separator'
-import AccountNavDropdown from '@/components/app/account/account-nav-dropdown'
+import { AccountNavigation } from '@/components/app/account/account-navigation'
 
 export default function AccountSecurityLayout({ changePassword, sessions }: NextLayoutProps & {
     changePassword: ReactNode,
@@ -13,7 +13,7 @@ export default function AccountSecurityLayout({ changePassword, sessions }: Next
         <Page>
             <PageHeader>
                 <PagePrimaryBar>
-                    <AccountNavDropdown />
+                    <AccountNavigation />
                 </PagePrimaryBar>
             </PageHeader>
             <PageBody>

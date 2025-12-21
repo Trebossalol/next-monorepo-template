@@ -3,7 +3,7 @@ import { NextLayoutProps } from "@/types/next";
 
 export default async function AppLayout({ children }: NextLayoutProps) {
     return (
-        <AppSidebar >
+        <AppSidebar>
             {children}
         </AppSidebar>
     )
