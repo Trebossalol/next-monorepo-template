@@ -1,4 +1,6 @@
-# 🚀 Next Monorepo Template [WORK IN PROGRESS]
+# 🚀 Next Monorepo Template
+
+This is a simple Next.js Monorepo template I use for my projects.
 
 ## ✨ Built-In Features
 
