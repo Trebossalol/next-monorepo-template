@@ -16,6 +16,18 @@ This is a simple Next.js Monorepo template I use for my projects.
 - 📝 React Hook Form
 - 🔒 Better Auth
 
+## Architecture
+
+The project is organized into the following directories:
+
+- `apps/web`: The main web application (Next.js)
+- `packages/auth`: Authentication logic
+- `packages/common`: Shared utilities and constants
+- `packages/database`: Prisma database schema and client
+- `packages/eslint-config`: ESLint configuration
+- `packages/typescript-config`: TypeScript configuration
+- `packages/ui`: Shared UI components and hooks
+
 ## Development Setuo
 
 ### 1. Install Dependencies
