@@ -20,7 +20,12 @@ export const signUp = actionClient
                 }
             });
         } catch (error) {
-            console.error(error);
+            const errorString = String(error)
+
+            if (errorString.includes('User already exists')) {
+                throw new ValidationError('User already exists');
+            }
+
             throw new ValidationError('Failed to sign up');
         }
     });

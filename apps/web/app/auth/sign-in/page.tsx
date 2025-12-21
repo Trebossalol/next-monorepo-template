@@ -30,8 +30,8 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
 export default function SignInPage() {
-    const [showPassword, setShowPassword] = useState(false);
     const router = useRouter();
+    const [showPassword, setShowPassword] = useState(false);
 
     const form = useForm<SignInSchema>({
         resolver: zodResolver(signInSchema),
@@ -118,7 +118,8 @@ export default function SignInPage() {
                                                 >
                                                     {showPassword ?
                                                         <EyeOffIcon className="size-4" /> :
-                                                        <EyeIcon className="size-4" />}
+                                                        <EyeIcon className="size-4" />
+                                                    }
                                                 </Button>
                                             </InputGroupAddon>
                                         </InputGroup>

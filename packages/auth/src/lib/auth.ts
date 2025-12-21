@@ -8,8 +8,14 @@ export const auth = betterAuth({
     database: prismaAdapter(prisma, {
         provider: 'postgresql'
     }),
+    onAPIError: {
+        throw: true,
+        onError: (error) => console.error('[Auth Error] - ', error)
+    },
     emailAndPassword: {
-        enabled: true
+        enabled: true,
+        disableSignUp: false,
+        minPasswordLength: 12
     },
     plugins: [
         admin(),
