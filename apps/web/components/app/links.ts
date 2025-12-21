@@ -8,16 +8,6 @@ export const sidebarMenuItems = [
         Icon: Home,
     },
     {
-        title: 'Design 1',
-        url: routes.web.app.design1.Index,
-        Icon: Paintbrush
-    },
-    {
-        title: 'Design 2',
-        url: routes.web.app.design2.Index,
-        Icon: Paintbrush
-    },
-    {
         title: 'Docs',
         url: routes.web.app.Docs,
         Icon: BookOpen
