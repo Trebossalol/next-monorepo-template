@@ -3,6 +3,7 @@ import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { nextCookies } from "better-auth/next-js";
 import { admin } from "better-auth/plugins"
+import { ac as accessControl, user as userRole, admin as adminRole } from "./permissions.js";
 
 export const auth = betterAuth({
     database: prismaAdapter(prisma, {
@@ -18,7 +19,13 @@ export const auth = betterAuth({
         minPasswordLength: 12
     },
     plugins: [
-        admin(),
+        admin({
+            ac: accessControl,
+            roles: {
+                user: userRole,
+                admin: adminRole
+            }
+        }),
         // Must be last plugin
         nextCookies()
     ]
