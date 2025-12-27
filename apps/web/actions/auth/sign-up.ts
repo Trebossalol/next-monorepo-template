@@ -26,6 +26,10 @@ export const signUp = actionClient
                 throw new ValidationError('User already exists');
             }
 
+            if (errorString.includes('Password too short')) {
+                throw new ValidationError('Password too short');
+            }
+
             throw new ValidationError('Failed to sign up');
         }
     });
