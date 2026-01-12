@@ -21,10 +21,11 @@ export const routes = {
                 Index: `${baseUrl.Web}/app/design2`
             },
             Docs: `${baseUrl.Web}/app/docs`,
+            Example: `${baseUrl.Web}/app/example`,
             account: {
                 Profile: `${baseUrl.Web}/app/account/profile`,
                 Security: `${baseUrl.Web}/app/account/security`
-            }
+            },
         }
     }
 } as const
