@@ -3,7 +3,7 @@ import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { nextCookies } from "better-auth/next-js";
 import { admin } from "better-auth/plugins"
-import { ac as accessControl, user as userRole, admin as adminRole } from "./permissions.js";
+import { ac as accessControl, user as userRole, admin as adminRole } from "@workspace/auth/lib/permissions";
 
 export const auth = betterAuth({
     database: prismaAdapter(prisma, {
@@ -16,7 +16,7 @@ export const auth = betterAuth({
     emailAndPassword: {
         enabled: true,
         disableSignUp: false,
-        minPasswordLength: 12
+        minPasswordLength: 8
     },
     plugins: [
         admin({
