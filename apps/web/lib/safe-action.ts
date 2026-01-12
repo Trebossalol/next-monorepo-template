@@ -1,10 +1,16 @@
+import { auth } from '@workspace/auth/lib/auth'
 import {
-    createSafeActionClient,
-} from 'next-safe-action';
-import { z } from 'zod';
-import { ForbiddenError, ValidationError, PreConditionError, NotFoundError, ServerError, ConflictError, ErrorCode } from '@workspace/common/errors';
-import { headers } from 'next/headers';
-import { auth } from '@workspace/auth/lib/auth';
+    ConflictError,
+    ErrorCode,
+    ForbiddenError,
+    NotFoundError,
+    PreConditionError,
+    ServerError,
+    ValidationError
+} from '@workspace/common/errors'
+import { createSafeActionClient } from 'next-safe-action'
+import { headers } from 'next/headers'
+import { z } from 'zod'
 
 export const actionClient = createSafeActionClient({
     handleServerError(e) {
@@ -16,8 +22,8 @@ export const actionClient = createSafeActionClient({
             e instanceof ServerError ||
             e instanceof ConflictError
         ) {
-            console.error(e);
-            return e.message;
+            console.error(e)
+            return e.message
         }
 
         return ErrorCode.ServerError
@@ -25,16 +31,16 @@ export const actionClient = createSafeActionClient({
     defineMetadataSchema() {
         return z.object({
             actionName: z.string()
-        });
+        })
     }
-});
+})
 
 export const authActionClient = actionClient.use(async ({ next }) => {
     const ctx = await auth.api.getSession({
         headers: await headers()
-    });
+    })
 
-    if (!ctx) throw new ForbiddenError();
+    if (!ctx) throw new ForbiddenError()
 
-    return next({ ctx });
-});
+    return next({ ctx })
+})
