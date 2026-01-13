@@ -1,5 +1,5 @@
 import { routes } from "@workspace/common/routes";
-import { BookOpen, Home, Lock, Paintbrush, Table, User } from "lucide-react";
+import { BookOpen, Home, Lock, Table, User } from "lucide-react";
 
 export const sidebarMenuItems = [
     {
