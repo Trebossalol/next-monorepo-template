@@ -1,7 +1,17 @@
 import 'server-only'
 import { ExampleItem, ExampleStatus } from '@/types/dto/example/example-table'
+import { searchParamsCache } from '@/components/app/example/search-params'
+import { cacheLife } from 'next/cache'
 
 export const getExampleData = async (): Promise<ExampleItem[]> => {
+
+    'use cache'
+    cacheLife('minutes')
+
+    const { pageIndex, pageSize, sortBy, sortOrder } = searchParamsCache.all()
+
+    console.log(`getExampleData: pageIndex=${pageIndex}, pageSize=${pageSize}, sortBy=${sortBy}, sortOrder=${sortOrder}`)
+
     // Return mock data with various statuses for demonstration
     return [
         {
