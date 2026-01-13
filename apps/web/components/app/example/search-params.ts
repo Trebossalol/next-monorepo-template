@@ -1,10 +1,12 @@
 import { createSearchParamsCache, parseAsArrayOf, parseAsInteger, parseAsString, parseAsStringEnum } from "nuqs/server";
+import { SortOrder } from "@workspace/database/index";
 
 export const VALID_SORT_FIELDS = ["name", "email", "status", "createdAt"] as const;
-export type SortField = (typeof VALID_SORT_FIELDS)[number];
+export type SortBy = (typeof VALID_SORT_FIELDS)[number];
 
-const DEFAULT_SORT_BY: SortField = "createdAt";
-const DEFAULT_SORT_ORDER = "asc" as const;
+export const DEFAULT_SORT_BY: SortBy = "createdAt";
+export const DEFAULT_SORT_ORDER: SortOrder = SortOrder.asc;
+export const DEFAULT_PAGE_SIZE = 25;
 
 export const searchParams = {
     query: parseAsString.withDefault("").withOptions({
@@ -13,7 +15,7 @@ export const searchParams = {
     pageIndex: parseAsInteger.withDefault(0).withOptions({
         shallow: true,
     }),
-    pageSize: parseAsInteger.withDefault(25).withOptions({
+    pageSize: parseAsInteger.withDefault(DEFAULT_PAGE_SIZE).withOptions({
         shallow: true,
     }),
     status: parseAsArrayOf(parseAsString).withDefault([]).withOptions({
@@ -24,7 +26,7 @@ export const searchParams = {
         .withOptions({
             shallow: true,
         }),
-    sortOrder: parseAsStringEnum(["asc", "desc"])
+    sortOrder: parseAsStringEnum(Object.values(SortOrder))
         .withDefault(DEFAULT_SORT_ORDER)
         .withOptions({
             shallow: true,
