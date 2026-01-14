@@ -1,3 +1,4 @@
+import 'server-only'
 import { headers } from "next/headers"
 import { auth } from "@workspace/auth/lib/auth"
 import { forbidden, redirect } from "next/navigation"
