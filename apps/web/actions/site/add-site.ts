@@ -3,12 +3,14 @@
 import { authActionClient } from "@/lib/safe-action";
 import { addSiteSchema } from "@/schemas/site/add-site-schema";
 import { prisma } from "@workspace/database/client";
+import { updateTag } from "next/cache";
+import { CacheNamespace } from "@/lib/caching";
 
 export const addSite = authActionClient
     .metadata({ actionName: "addSite" })
     .inputSchema(addSiteSchema)
     .action(async ({ parsedInput, ctx }) => {
-        const site = await prisma.site.create({
+        await prisma.site.create({
             data: {
                 name: parsedInput.name,
                 description: parsedInput.description,
@@ -16,5 +18,5 @@ export const addSite = authActionClient
             },
         });
 
-        return site;
+        updateTag(CacheNamespace.Sites)
     });

@@ -3,6 +3,8 @@
 import { authActionClient } from "@/lib/safe-action";
 import { updateSiteSchema } from "@/schemas/site/update-site-schema";
 import { prisma } from "@workspace/database/client";
+import { updateTag } from "next/cache";
+import { CacheNamespace } from "@/lib/caching";
 
 export const updateSite = authActionClient
     .metadata({ actionName: "updateSite" })
@@ -12,4 +14,6 @@ export const updateSite = authActionClient
             where: { id: parsedInput.id },
             data: parsedInput.changes,
         });
+
+        updateTag(CacheNamespace.Sites)
     });
