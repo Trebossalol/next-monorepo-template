@@ -11,6 +11,7 @@ import { Button } from "@workspace/ui/components/button"
 import {
     createSelectionColumn,
     DataTable,
+    DataTableBulkActions,
     type FilterConfig,
     SortableColumnHeader,
 } from "@workspace/ui/components/custom/data-table"
@@ -32,6 +33,9 @@ import NiceModal from "@ebay/nice-modal-react"
 import { AddSiteModal } from "@/components/app/sites/add-site-modal"
 import { UpdateSiteModal } from "@/components/app/sites/update-site-modal"
 import { siteStatusSchema, SiteStatusSchema } from "@/schemas/site/site-status-schema"
+import { useTransitionContext } from "@/hooks/use-transition-context"
+import { bulkRemoveSites } from "@/actions/site/bulk-remove"
+import { ConfirmationModal } from "@/components/generic/modals/confirmation-modal"
 
 interface ExampleTableProps {
     sites: SiteDto[]
@@ -39,7 +43,9 @@ interface ExampleTableProps {
 }
 
 export function ExampleTable({ sites, totalCount }: ExampleTableProps) {
-    const [{ query, pageIndex, pageSize, status, selectedRows, sortBy, sortOrder }, setSearchParams] =
+    const { startTransition, isLoading } = useTransitionContext()
+
+    const [{ query, pageIndex, pageSize, status, sortBy, selectedRows, sortOrder }, setSearchParams] =
         useQueryStates(searchParams)
 
     const handleSortingChange = (newSorting: SortingState): void => {
@@ -49,12 +55,17 @@ export function ExampleTable({ sites, totalCount }: ExampleTableProps) {
             sortBy: sort.id as SortBy,
             sortOrder: sort.desc ? SortOrder.Desc : SortOrder.Asc,
             pageIndex: 0
-        })
+        }, { startTransition })
     }
 
-    const handleFiltersChange = (newFilters: ColumnFiltersState): void => {
-        setSearchParams({ status: newFilters.map((filter) => filter.value as SiteStatusSchema) })
-    }
+    const handleFiltersChange = (filters: ColumnFiltersState): void => {
+        const getFilterValue = (id: string): string[] => {
+            const filter = filters.find((f) => f.id === id);
+            return Array.isArray(filter?.value) ? (filter.value as string[]) : [];
+        };
+
+        setSearchParams({ status: getFilterValue("status") as SiteStatusSchema[], pageIndex: 0 }, { startTransition });
+    };
 
     const handleRowSelectionChange = (newSelection: Record<string, boolean>): void => {
         setSearchParams({ selectedRows: Object.keys(newSelection) })
@@ -70,6 +81,18 @@ export function ExampleTable({ sites, totalCount }: ExampleTableProps) {
 
     const handleDeleteRow = (item: SiteDto) => {
         NiceModal.show(RemoveSiteModal, { siteId: item.id })
+    }
+
+    const handleBulkDelete = () => {
+        NiceModal.show(ConfirmationModal, {
+            title: "Delete Selected Sites",
+            message: `Delete ${selectedRows.length} site${selectedRows.length > 1 ? "s" : ""}?`,
+            confirmLabel: "Delete",
+            onConfirm: () =>
+                bulkRemoveSites({
+                    siteIds: selectedRows
+                })
+        })
     }
 
     const columns: ColumnDef<SiteDto>[] = React.useMemo(
@@ -199,14 +222,13 @@ export function ExampleTable({ sites, totalCount }: ExampleTableProps) {
         return [{ id: sortBy, desc: sortOrder === SortOrder.Desc }]
     }, [sortBy, sortOrder])
 
-    const statusFilterState: ColumnFiltersState = useMemo(() => {
-        return status.map((status) => {
-            return {
-                id: status,
-                value: status,
-            }
-        })
-    }, [status])
+    const columnFilters: ColumnFiltersState = React.useMemo(() => {
+        const filters: ColumnFiltersState = [];
+        if (status && status.length > 0) {
+            filters.push({ id: "status", value: status });
+        }
+        return filters;
+    }, [status]);
 
     const rowSelectionState: Record<string, boolean> = useMemo(() => {
         return selectedRows.reduce((acc, row) => {
@@ -224,8 +246,8 @@ export function ExampleTable({ sites, totalCount }: ExampleTableProps) {
             enablePagination
             enableRowSelection
             enableSearch
-            loading={false}
-            columnFilters={statusFilterState}
+            loading={isLoading}
+            columnFilters={columnFilters}
             sorting={sortingState}
             filters={filters}
             pageIndex={pageIndex}
@@ -233,10 +255,10 @@ export function ExampleTable({ sites, totalCount }: ExampleTableProps) {
             searchQuery={query}
             rowSelection={rowSelectionState}
             onFiltersChange={handleFiltersChange}
-            onPageIndexChange={(index) => setSearchParams({ pageIndex: index })}
-            onPageSizeChange={(size) => setSearchParams({ pageSize: size, pageIndex: 0 })}
+            onPageIndexChange={(index) => setSearchParams({ pageIndex: index }, { startTransition })}
+            onPageSizeChange={(size) => setSearchParams({ pageSize: size, pageIndex: 0 }, { startTransition })}
             onRowSelectionChange={handleRowSelectionChange}
-            onSearchQueryChange={(value) => setSearchParams({ query: value ?? null, pageIndex: 0 })}
+            onSearchQueryChange={(value) => setSearchParams({ query: value ?? null, pageIndex: 0 }, { startTransition })}
             onSortingChange={handleSortingChange}
             searchPlaceholder="Search items..."
             toolbarActions={
@@ -245,6 +267,17 @@ export function ExampleTable({ sites, totalCount }: ExampleTableProps) {
                     Add Item
                 </Button>
             }
+            renderBulkActions={(table) => (
+                <DataTableBulkActions
+                    table={table}
+                    actions={[
+                        {
+                            label: "Delete",
+                            onClick: handleBulkDelete
+                        }
+                    ]}
+                />
+            )}
             totalCount={totalCount}
         />
     )

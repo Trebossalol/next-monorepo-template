@@ -4,6 +4,7 @@ import { Page, PageBody, PageContent, PageHeader, PagePrimaryBar } from '@worksp
 import { searchParamsCache } from '@/components/app/sites/search-params'
 import { getSafeAuthSession } from '@/lib/server-utils'
 import { getSites } from '@/data/site/get-sites'
+import { TransitionProvider } from '@/hooks/use-transition-context'
 
 export default async function SitesPage(props: NextPageProps) {
 
@@ -22,7 +23,9 @@ export default async function SitesPage(props: NextPageProps) {
             </PageHeader>
             <PageBody>
                 <PageContent title="Sites">
-                    <ExampleTable sites={sites} totalCount={totalCount} />
+                    <TransitionProvider>
+                        <ExampleTable sites={sites} totalCount={totalCount} />
+                    </TransitionProvider>
                 </PageContent>
             </PageBody>
         </Page>

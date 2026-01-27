@@ -32,7 +32,6 @@ export const searchParams = {
         .withOptions(queryOptions),
     selectedRows: parseAsArrayOf(parseAsString)
         .withDefault([])
-        .withOptions(queryOptions),
 }
 
 export const searchParamsCache = createSearchParamsCache(searchParams);

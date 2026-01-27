@@ -8,12 +8,12 @@ const TransitionContext = React.createContext<{
 }>({ isLoading: false, startTransition: () => { } });
 
 export const TransitionProvider = ({ children }: React.PropsWithChildren) => {
-    const transition = React.useTransition();
+    const [isLoading, startTransition] = React.useTransition();
     return (
         <TransitionContext.Provider
             value={{
-                isLoading: transition[0],
-                startTransition: transition[1]
+                isLoading,
+                startTransition
             }}
         >
             {children}
