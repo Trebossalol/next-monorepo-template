@@ -1,4 +1,3 @@
-import { auth } from '@workspace/auth/lib/auth'
 import {
     ConflictError,
     ErrorCode,
@@ -10,6 +9,7 @@ import {
 } from '@workspace/common/errors'
 import { createSafeActionClient } from 'next-safe-action'
 import { headers } from 'next/headers'
+import 'server-only'
 import { z } from 'zod'
 
 export const actionClient = createSafeActionClient({

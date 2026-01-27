@@ -14,17 +14,11 @@ export const routes = {
         app: {
             Index: `${baseUrl.Web}/app`,
             Home: `${baseUrl.Web}/app/home`,
-            design1: {
-                Index: `${baseUrl.Web}/app/design1`
-            },
-            design2: {
-                Index: `${baseUrl.Web}/app/design2`
-            },
-            Docs: `${baseUrl.Web}/app/docs`,
+            Sites: `${baseUrl.Web}/app/sites`,
             account: {
                 Profile: `${baseUrl.Web}/app/account/profile`,
                 Security: `${baseUrl.Web}/app/account/security`
-            }
+            },
         }
     }
 } as const

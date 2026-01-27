@@ -3,7 +3,7 @@
 import { actionClient } from "@/lib/safe-action";
 import { signUpSchema } from "@/schemas/auth/sign-up-schema";
 import { auth } from "@workspace/auth/lib/auth";
-import { ValidationError } from "@workspace/common/errors";
+import { ConflictError, ValidationError } from "@workspace/common/errors";
 import { routes } from "@workspace/common/routes";
 
 export const signUp = actionClient
@@ -23,13 +23,14 @@ export const signUp = actionClient
             const errorString = String(error)
 
             if (errorString.includes('User already exists')) {
-                throw new ValidationError('User already exists');
+                throw new ConflictError('User already exists');
             }
 
             if (errorString.includes('Password too short')) {
                 throw new ValidationError('Password too short');
             }
 
+            console.error(error);
             throw new ValidationError('Failed to sign up');
         }
     });

@@ -1,4 +1,3 @@
-import Link from "next/link";
 import * as React from "react";
 import {
     Breadcrumb,
@@ -103,7 +102,7 @@ export function PageBreadcrumb({
                                     <BreadcrumbPage>{segment.label}</BreadcrumbPage>
                                 ) : (
                                     <BreadcrumbLink asChild>
-                                        <Link href={segment.href}>{segment.label}</Link>
+                                        <a href={segment.href}>{segment.label}</a>
                                     </BreadcrumbLink>
                                 )}
                             </BreadcrumbItem>

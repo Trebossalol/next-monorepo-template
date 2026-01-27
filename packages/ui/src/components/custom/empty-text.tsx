@@ -1,5 +1,5 @@
 import type * as React from "react";
-import { cn } from "@/lib/utils";
+import { cn } from "@workspace/ui/lib/utils";
 
 export type EmptyTextProps = React.HtmlHTMLAttributes<HTMLParagraphElement>;
 export function EmptyText({

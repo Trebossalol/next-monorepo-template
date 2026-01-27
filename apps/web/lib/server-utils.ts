@@ -1,14 +1,10 @@
-import { auth } from '@workspace/auth/lib/auth'
-import {
-    admin as adminRole,
-    type Permission,
-    type RoleName,
-    user as userRole
-} from '@workspace/auth/lib/permissions'
-import { routes } from '@workspace/common/routes'
-import { headers } from 'next/headers'
-import { forbidden, redirect } from 'next/navigation'
-import { cache } from 'react'
+import { auth } from "@workspace/auth/lib/auth"
+import { admin as adminRole, user as userRole, type Permission, type RoleName } from "@workspace/auth/lib/permissions"
+import { routes } from "@workspace/common/routes"
+import { headers } from "next/headers"
+import { forbidden, redirect } from "next/navigation"
+import { cache } from "react"
+import 'server-only'
 
 type GetSafeAuthSessionOptions = {
     /**

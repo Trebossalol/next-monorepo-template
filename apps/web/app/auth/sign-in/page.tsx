@@ -22,7 +22,7 @@ import {
 } from "@workspace/ui/components/field";
 import { routes } from "@workspace/common/routes";
 import { InputGroup, InputGroupAddon, InputGroupInput } from "@workspace/ui/components/input-group";
-import { EyeIcon, EyeOffIcon } from "lucide-react";
+import { EyeIcon, EyeOffIcon, Loader2 } from "lucide-react";
 import { Button } from "@workspace/ui/components/button";
 import { Checkbox } from "@workspace/ui/components/checkbox";
 import { signIn } from "@/actions/auth/sign-in";
@@ -153,9 +153,13 @@ export default function SignInPage() {
                         <Button
                             className="w-full h-10 rounded-lg"
                             type="submit"
-                            isLoading={form.formState.isSubmitting}
+                            disabled={form.formState.isSubmitting}
                         >
-                            Continue
+                            {form.formState.isSubmitting ? (
+                                <Loader2 className="size-4 animate-spin" />
+                            ) : (
+                                "Continue"
+                            )}
                         </Button>
                     </form>
                 </CardContent>
