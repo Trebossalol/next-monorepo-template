@@ -8,8 +8,8 @@ export const sidebarMenuItems = [
         Icon: Home,
     },
     {
-        title: 'Example Table',
-        url: routes.web.app.ExampleTable,
+        title: 'Sites',
+        url: routes.web.app.Sites,
         Icon: Table
     }
 ]

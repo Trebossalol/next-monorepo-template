@@ -19,7 +19,6 @@ import {
 } from "@workspace/ui/components/sidebar"
 import { sidebarMenuItems } from "@/components/app/links"
 import { APP_NAME } from "@workspace/common/constants"
-import { NextLayoutProps } from "@/types/next"
 import { AccountDropdownMenu } from "@/components/app/account/account-dropdown-menu"
 
 export default function AppSidebar({ children }: NextLayoutProps) {

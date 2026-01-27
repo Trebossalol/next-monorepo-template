@@ -1,12 +1,12 @@
 import { z } from "zod";
-import { SiteStatus } from "@workspace/database/index";
+import { siteStatusSchema } from "./site-status-schema";
 
 export const updateSiteSchema = z.object({
     id: z.string().uuid("Invalid site ID"),
     changes: z.object({
-        name: z.string().min(1, "Name is required"),
+        name: z.string().optional(),
         description: z.string().optional(),
-        status: z.nativeEnum(SiteStatus).optional(),
+        status: siteStatusSchema.optional(),
     }),
 });
 

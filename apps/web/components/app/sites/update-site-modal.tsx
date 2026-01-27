@@ -22,8 +22,8 @@ import { SiteDto } from "@/types/dto/site/site-dto"
 import { UpdateSiteSchema, updateSiteSchema } from "@/schemas/site/update-site-schema"
 import { updateSite } from "@/actions/site/update-site"
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@workspace/ui/components/select"
-import { SiteStatus } from "@workspace/database/index"
 import { capitalize } from "@workspace/common/utils/labels"
+import { siteStatusSchema } from "@/schemas/site/site-status-schema"
 
 type UpdateSiteModalProps = {
     site: SiteDto
@@ -109,7 +109,7 @@ export const UpdateSiteModal = NiceModal.create((props: UpdateSiteModalProps) =>
                                                 <SelectValue placeholder="Select a status" />
                                             </SelectTrigger>
                                             <SelectContent>
-                                                {Object.values(SiteStatus).map((status) => (
+                                                {siteStatusSchema.options.map((status) => (
                                                     <SelectItem key={status} value={status}>
                                                         {capitalize(status)}
                                                     </SelectItem>

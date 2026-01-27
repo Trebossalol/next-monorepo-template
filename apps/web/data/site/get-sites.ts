@@ -21,7 +21,7 @@ export const getSites = async (options: GetSitesOptions): Promise<{ sites: SiteD
                     { name: { contains: query, mode: 'insensitive' } },
                     { description: { contains: query, mode: 'insensitive' } }
                 ],
-                status: { in: status }
+                status: status.length > 0 ? { in: status } : undefined
             },
             orderBy: {
                 [sortBy]: sortOrder

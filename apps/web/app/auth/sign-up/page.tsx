@@ -16,14 +16,13 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { signUpSchema, SignUpSchema } from "@/schemas/auth/sign-up-schema";
 import {
     Field,
-    FieldDescription,
     FieldError,
     FieldGroup,
     FieldLabel,
 } from "@workspace/ui/components/field";
 import { routes } from "@workspace/common/routes";
 import { InputGroup, InputGroupAddon, InputGroupInput } from "@workspace/ui/components/input-group";
-import { EyeIcon, EyeOffIcon } from "lucide-react";
+import { EyeIcon, EyeOffIcon, Loader2 } from "lucide-react";
 import { Button } from "@workspace/ui/components/button";
 import { signUp } from "@/actions/auth/sign-up";
 import { toast } from "sonner";
@@ -44,6 +43,7 @@ export default function RegisterPage() {
 
     const onSubmit = async (data: SignUpSchema) => {
         const result = await signUp(data);
+        console.log(result);
         if (result.serverError) toast.error(result.serverError);
         else {
             toast.success('Account created successfully', {
@@ -81,9 +81,6 @@ export default function RegisterPage() {
                                             placeholder="John Doe"
                                             autoComplete="off"
                                         />
-                                        <FieldDescription>
-                                            Enter your full name
-                                        </FieldDescription>
                                         {fieldState.invalid && (
                                             <FieldError errors={[fieldState.error]} />
                                         )}
@@ -158,9 +155,13 @@ export default function RegisterPage() {
                         <Button
                             className="w-full h-10 rounded-lg"
                             type="submit"
-                            isLoading={form.formState.isSubmitting}
+                            disabled={form.formState.isSubmitting}
                         >
-                            Create account
+                            {form.formState.isSubmitting ? (
+                                <Loader2 className="size-4 animate-spin" />
+                            ) : (
+                                "Create account"
+                            )}
                         </Button>
                     </form>
                 </CardContent>

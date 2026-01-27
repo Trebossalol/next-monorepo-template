@@ -1,6 +1,7 @@
 import { createSearchParamsCache, Options, parseAsArrayOf, parseAsInteger, parseAsString, parseAsStringEnum } from "nuqs/server";
-import { Site, SiteStatus } from "@workspace/database/index";
+import { Site } from "@workspace/database/index";
 import { SortOrder } from "@/types/utils";
+import { siteStatusSchema } from "@/schemas/site/site-status-schema";
 
 export type SortBy = keyof Site;
 
@@ -20,10 +21,7 @@ export const searchParams = {
     pageSize: parseAsInteger
         .withDefault(DEFAULT_PAGE_SIZE)
         .withOptions(queryOptions),
-    status: parseAsArrayOf(parseAsStringEnum(Object.values(SiteStatus)))
-        .withDefault([])
-        .withOptions(queryOptions),
-    columnFilters: parseAsArrayOf(parseAsStringEnum(Object.values(SiteStatus)))
+    status: parseAsArrayOf(parseAsStringEnum(siteStatusSchema.options))
         .withDefault([])
         .withOptions(queryOptions),
     sortBy: parseAsStringEnum(VALID_SORT_FIELDS)

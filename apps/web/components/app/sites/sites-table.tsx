@@ -25,13 +25,13 @@ import { searchParams, SortBy } from "./search-params"
 import { cn } from "@workspace/ui/lib/utils"
 import { capitalize, getInitials } from "@workspace/common/utils/labels"
 import { SiteDto } from "@/types/dto/site/site-dto"
-import { SiteStatus } from "@workspace/database/index"
 import { SortOrder } from "@/types/utils"
 import { useMemo } from "react"
 import { RemoveSiteModal } from "@/components/app/sites/remove-site-modal"
 import NiceModal from "@ebay/nice-modal-react"
 import { AddSiteModal } from "@/components/app/sites/add-site-modal"
 import { UpdateSiteModal } from "@/components/app/sites/update-site-modal"
+import { siteStatusSchema, SiteStatusSchema } from "@/schemas/site/site-status-schema"
 
 interface ExampleTableProps {
     sites: SiteDto[]
@@ -39,7 +39,7 @@ interface ExampleTableProps {
 }
 
 export function ExampleTable({ sites, totalCount }: ExampleTableProps) {
-    const [{ query, pageIndex, pageSize, status, selectedRows, columnFilters, sortBy, sortOrder }, setSearchParams] =
+    const [{ query, pageIndex, pageSize, status, selectedRows, sortBy, sortOrder }, setSearchParams] =
         useQueryStates(searchParams)
 
     const handleSortingChange = (newSorting: SortingState): void => {
@@ -53,7 +53,7 @@ export function ExampleTable({ sites, totalCount }: ExampleTableProps) {
     }
 
     const handleFiltersChange = (newFilters: ColumnFiltersState): void => {
-
+        setSearchParams({ status: newFilters.map((filter) => filter.value as SiteStatusSchema) })
     }
 
     const handleRowSelectionChange = (newSelection: Record<string, boolean>): void => {
@@ -75,29 +75,6 @@ export function ExampleTable({ sites, totalCount }: ExampleTableProps) {
     const columns: ColumnDef<SiteDto>[] = React.useMemo(
         () => [
             createSelectionColumn<SiteDto>(),
-            {
-                accessorKey: "createdBy",
-                header: ({ column }) => (
-                    <SortableColumnHeader column={column} title="Created By" />
-                ),
-                cell: ({ row }) => {
-                    return (
-                        <div className="flex max-w-[200px] items-center gap-2">
-                            <Avatar className="size-6 shrink-0">
-                                <AvatarFallback className="bg-muted">
-                                    <span className="text-xs">{getInitials(row.original.createdBy.name)}</span>
-                                </AvatarFallback>
-                            </Avatar>
-                            <span
-                                className="truncate font-medium text-foreground"
-                                title={row.original.createdBy.name}
-                            >
-                                {row.original.createdBy.name}
-                            </span>
-                        </div>
-                    )
-                },
-            },
             {
                 accessorKey: "name",
                 header: ({ column }) => (
@@ -136,6 +113,29 @@ export function ExampleTable({ sites, totalCount }: ExampleTableProps) {
                 cell: ({ row }) => (
                     <Badge variant="outline">{capitalize(row.original.status)}</Badge>
                 ),
+            },
+            {
+                accessorKey: "createdBy",
+                header: ({ column }) => (
+                    <SortableColumnHeader column={column} title="Created By" />
+                ),
+                cell: ({ row }) => {
+                    return (
+                        <div className="flex max-w-[200px] items-center gap-2">
+                            <Avatar className="size-6 shrink-0">
+                                <AvatarFallback className="bg-muted">
+                                    <span className="text-xs">{getInitials(row.original.createdBy.name)}</span>
+                                </AvatarFallback>
+                            </Avatar>
+                            <span
+                                className="truncate font-medium text-foreground"
+                                title={row.original.createdBy.name}
+                            >
+                                {row.original.createdBy.name}
+                            </span>
+                        </div>
+                    )
+                },
             },
             {
                 accessorKey: "createdAt",
@@ -188,9 +188,9 @@ export function ExampleTable({ sites, totalCount }: ExampleTableProps) {
         {
             key: "status",
             title: "Status",
-            options: Object.values(SiteStatus).map((status) => ({
+            options: siteStatusSchema.options.map((status) => ({
                 value: status,
-                label: capitalize(status),
+                label: capitalize(status)
             })),
         },
     ]
@@ -199,14 +199,14 @@ export function ExampleTable({ sites, totalCount }: ExampleTableProps) {
         return [{ id: sortBy, desc: sortOrder === SortOrder.Desc }]
     }, [sortBy, sortOrder])
 
-    const columnFilterState: ColumnFiltersState = useMemo(() => {
-        return columnFilters.map((filter) => {
+    const statusFilterState: ColumnFiltersState = useMemo(() => {
+        return status.map((status) => {
             return {
-                id: filter,
-                value: filter,
+                id: status,
+                value: status,
             }
         })
-    }, [columnFilters])
+    }, [status])
 
     const rowSelectionState: Record<string, boolean> = useMemo(() => {
         return selectedRows.reduce((acc, row) => {
@@ -225,7 +225,7 @@ export function ExampleTable({ sites, totalCount }: ExampleTableProps) {
             enableRowSelection
             enableSearch
             loading={false}
-            columnFilters={columnFilterState}
+            columnFilters={statusFilterState}
             sorting={sortingState}
             filters={filters}
             pageIndex={pageIndex}
