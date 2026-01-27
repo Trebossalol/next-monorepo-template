@@ -1,6 +1,6 @@
 import React from 'react'
 import { ExampleTable } from '@/components/app/sites/sites-table'
-import { Page, PageBody, PageContent, PageHeader, PagePrimaryBar } from '@workspace/ui/components/custom/page'
+import { Page, PageBody, PageBreadcrumb, PageContent, PageHeader, PagePrimaryBar } from '@workspace/ui/components/custom/page'
 import { searchParamsCache } from '@/components/app/sites/search-params'
 import { getSafeAuthSession } from '@/lib/server-utils'
 import { getSites } from '@/data/site/get-sites'
@@ -18,11 +18,11 @@ export default async function SitesPage(props: NextPageProps) {
         <Page>
             <PageHeader>
                 <PagePrimaryBar>
-                    Example Table
+                    <PageBreadcrumb segments={[{ label: "Sites" }]} />
                 </PagePrimaryBar>
             </PageHeader>
             <PageBody>
-                <PageContent title="Sites">
+                <PageContent title="Manage Sites">
                     <TransitionProvider>
                         <ExampleTable sites={sites} totalCount={totalCount} />
                     </TransitionProvider>
