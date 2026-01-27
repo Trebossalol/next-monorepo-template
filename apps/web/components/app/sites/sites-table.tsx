@@ -234,13 +234,9 @@ export function ExampleTable({ sites, totalCount }: ExampleTableProps) {
             rowSelection={rowSelectionState}
             onFiltersChange={handleFiltersChange}
             onPageIndexChange={(index) => setSearchParams({ pageIndex: index })}
-            onPageSizeChange={(size) => {
-                setSearchParams({ pageSize: size, pageIndex: 0 })
-            }}
+            onPageSizeChange={(size) => setSearchParams({ pageSize: size, pageIndex: 0 })}
             onRowSelectionChange={handleRowSelectionChange}
-            onSearchQueryChange={(value) => {
-                setSearchParams({ query: value ?? null, pageIndex: 0 })
-            }}
+            onSearchQueryChange={(value) => setSearchParams({ query: value ?? null, pageIndex: 0 })}
             onSortingChange={handleSortingChange}
             searchPlaceholder="Search items..."
             toolbarActions={
