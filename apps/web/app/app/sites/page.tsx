@@ -1,17 +1,17 @@
 import React from 'react'
-import { ExampleTable } from '@/components/app/example-table/example-table'
+import { ExampleTable } from '@/components/app/sites/sites-table'
 import { Page, PageBody, PageContent, PageHeader, PagePrimaryBar } from '@workspace/ui/components/custom/page'
-import { searchParamsCache } from '@/components/app/example-table/search-params'
+import { searchParamsCache } from '@/components/app/sites/search-params'
 import { getSafeAuthSession } from '@/lib/server-utils'
 import { getSites } from '@/data/site/get-sites'
 
-export default async function ExampleTablePage(props: NextPageProps) {
+export default async function SitesPage(props: NextPageProps) {
 
     await getSafeAuthSession()
 
-    await searchParamsCache.parse(props.searchParams)
+    const searchParams = await searchParamsCache.parse(props.searchParams)
 
-    const { sites, totalCount } = await getSites()
+    const { sites, totalCount } = await getSites(searchParams)
 
     return (
         <Page>

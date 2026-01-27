@@ -21,12 +21,17 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@workspace/ui/components/dropdown-menu"
-import { searchParams } from "./search-params"
+import { searchParams, SortBy } from "./search-params"
 import { cn } from "@workspace/ui/lib/utils"
 import { capitalize, getInitials } from "@workspace/common/utils/labels"
 import { SiteDto } from "@/types/dto/site/site-dto"
 import { SiteStatus } from "@workspace/database/index"
 import { SortOrder } from "@/types/utils"
+import { useMemo } from "react"
+import { RemoveSiteModal } from "@/components/app/sites/remove-site-modal"
+import NiceModal from "@ebay/nice-modal-react"
+import { AddSiteModal } from "@/components/app/sites/add-site-modal"
+import { UpdateSiteModal } from "@/components/app/sites/update-site-modal"
 
 interface ExampleTableProps {
     sites: SiteDto[]
@@ -34,31 +39,37 @@ interface ExampleTableProps {
 }
 
 export function ExampleTable({ sites, totalCount }: ExampleTableProps) {
-    const [{ query, pageIndex, pageSize, status, columnFilters, sortBy, sortOrder }, setSearchParams] =
+    const [{ query, pageIndex, pageSize, status, selectedRows, columnFilters, sortBy, sortOrder }, setSearchParams] =
         useQueryStates(searchParams)
 
     const handleSortingChange = (newSorting: SortingState): void => {
         const [sort] = newSorting
+        if (!sort) return
         setSearchParams({
-            sortBy: sort?.id as typeof sortBy,
-            sortOrder: sort?.desc ? SortOrder.Desc : SortOrder.Asc,
+            sortBy: sort.id as SortBy,
+            sortOrder: sort.desc ? SortOrder.Desc : SortOrder.Asc,
             pageIndex: 0
         })
     }
 
-    const handleFiltersChange = (filters: ColumnFiltersState): void => {
+    const handleFiltersChange = (newFilters: ColumnFiltersState): void => {
+
     }
 
-    const handleDelete = async () => {
+    const handleRowSelectionChange = (newSelection: Record<string, boolean>): void => {
+        setSearchParams({ selectedRows: Object.keys(newSelection) })
     }
 
-    const handleEdit = (item: SiteDto) => {
+    const handleEditRow = (item: SiteDto) => {
+        NiceModal.show(UpdateSiteModal, { site: item })
     }
 
-    const handleAdd = () => {
+    const handleAddRow = () => {
+        NiceModal.show(AddSiteModal)
     }
 
-    const handleDeleteClick = (item: SiteDto) => {
+    const handleDeleteRow = (item: SiteDto) => {
+        NiceModal.show(RemoveSiteModal, { siteId: item.id })
     }
 
     const columns: ColumnDef<SiteDto>[] = React.useMemo(
@@ -154,12 +165,12 @@ export function ExampleTable({ sites, totalCount }: ExampleTableProps) {
                                 </Button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="end">
-                                <DropdownMenuItem onClick={() => handleEdit(row.original)}>
+                                <DropdownMenuItem onClick={() => handleEditRow(row.original)}>
                                     Edit
                                 </DropdownMenuItem>
                                 <DropdownMenuSeparator />
                                 <DropdownMenuItem
-                                    onClick={() => handleDeleteClick(row.original)}
+                                    onClick={() => handleDeleteRow(row.original)}
                                     className="text-destructive focus:text-destructive"
                                 >
                                     Delete
@@ -173,7 +184,7 @@ export function ExampleTable({ sites, totalCount }: ExampleTableProps) {
         [],
     )
 
-    const statusFilters: FilterConfig[] = [
+    const filters: FilterConfig[] = [
         {
             key: "status",
             title: "Status",
@@ -184,6 +195,26 @@ export function ExampleTable({ sites, totalCount }: ExampleTableProps) {
         },
     ]
 
+    const sortingState: SortingState = useMemo(() => {
+        return [{ id: sortBy, desc: sortOrder === SortOrder.Desc }]
+    }, [sortBy, sortOrder])
+
+    const columnFilterState: ColumnFiltersState = useMemo(() => {
+        return columnFilters.map((filter) => {
+            return {
+                id: filter,
+                value: filter,
+            }
+        })
+    }, [columnFilters])
+
+    const rowSelectionState: Record<string, boolean> = useMemo(() => {
+        return selectedRows.reduce((acc, row) => {
+            acc[row] = true
+            return acc
+        }, {} as Record<string, boolean>)
+    }, [selectedRows])
+
     return (
         <DataTable
             columns={columns}
@@ -193,27 +224,27 @@ export function ExampleTable({ sites, totalCount }: ExampleTableProps) {
             enablePagination
             enableRowSelection
             enableSearch
-            columnFilters={[]}
-            filters={statusFilters}
             loading={false}
+            columnFilters={columnFilterState}
+            sorting={sortingState}
+            filters={filters}
+            pageIndex={pageIndex}
+            pageSize={pageSize}
+            searchQuery={query}
+            rowSelection={rowSelectionState}
             onFiltersChange={handleFiltersChange}
             onPageIndexChange={(index) => setSearchParams({ pageIndex: index })}
             onPageSizeChange={(size) => {
                 setSearchParams({ pageSize: size, pageIndex: 0 })
             }}
-            onRowSelectionChange={() => { }}
+            onRowSelectionChange={handleRowSelectionChange}
             onSearchQueryChange={(value) => {
-                setSearchParams({ query: value || null, pageIndex: 0 })
+                setSearchParams({ query: value ?? null, pageIndex: 0 })
             }}
             onSortingChange={handleSortingChange}
-            pageIndex={pageIndex}
-            pageSize={pageSize}
-            rowSelection={{}}
             searchPlaceholder="Search items..."
-            searchQuery={query}
-            sorting={[{ id: sortBy, desc: sortOrder === SortOrder.Desc }]}
             toolbarActions={
-                <Button onClick={handleAdd} size="sm">
+                <Button onClick={handleAddRow} size="sm">
                     <PlusIcon className="size-4 shrink-0" />
                     Add Item
                 </Button>
