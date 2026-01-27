@@ -3,6 +3,7 @@
 enum SiteStatus {
     Active
     Inactive
+    Deleted
 }
 
 model Site {
