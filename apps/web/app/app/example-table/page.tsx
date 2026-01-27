@@ -1,17 +1,17 @@
 import React from 'react'
-import { getExampleData } from '@/data/example/get-example-data'
-import { ExampleTable } from '@/components/app/example/example-table'
+import { ExampleTable } from '@/components/app/example-table/example-table'
 import { Page, PageBody, PageContent, PageHeader, PagePrimaryBar } from '@workspace/ui/components/custom/page'
-import { searchParamsCache } from '@/components/app/example/search-params'
+import { searchParamsCache } from '@/components/app/example-table/search-params'
 import { getSafeAuthSession } from '@/lib/server-utils'
+import { getSites } from '@/data/site/get-sites'
 
-export default async function ExamplePage(props: NextPageProps) {
+export default async function ExampleTablePage(props: NextPageProps) {
 
     await getSafeAuthSession()
 
     await searchParamsCache.parse(props.searchParams)
 
-    const initialData = await getExampleData()
+    const { sites, totalCount } = await getSites()
 
     return (
         <Page>
@@ -21,8 +21,8 @@ export default async function ExamplePage(props: NextPageProps) {
                 </PagePrimaryBar>
             </PageHeader>
             <PageBody>
-                <PageContent title="Example Table">
-                    <ExampleTable initialData={initialData} />
+                <PageContent title="Sites">
+                    <ExampleTable sites={sites} totalCount={totalCount} />
                 </PageContent>
             </PageBody>
         </Page>

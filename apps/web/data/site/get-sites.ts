@@ -1,4 +1,5 @@
 import 'server-only'
+
 import { searchParamsCache } from '@/components/app/example-table/search-params'
 import { SiteDto } from '@/types/dto/site/site-dto'
 import { cacheTag } from 'next/cache'
@@ -10,10 +11,17 @@ export const getSites = async (): Promise<{ sites: SiteDto[]; totalCount: number
     'use cache'
     cacheTag(CacheNamespace.Sites)
 
-    const { pageIndex, pageSize, sortBy, sortOrder } = searchParamsCache.all()
+    const { pageIndex, pageSize, sortBy, sortOrder, status, query } = searchParamsCache.all()
 
     const [sites, totalCount] = await Promise.all([
         prisma.site.findMany({
+            where: {
+                OR: [
+                    { name: { contains: query, mode: 'insensitive' } },
+                    { description: { contains: query, mode: 'insensitive' } }
+                ],
+                status: { in: status }
+            },
             orderBy: {
                 [sortBy]: sortOrder
             },
