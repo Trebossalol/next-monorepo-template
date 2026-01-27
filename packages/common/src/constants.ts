@@ -1,1 +1,1 @@
-export const APP_NAME = "Next Monorepo Template"
+export const APP_NAME = 'Next Monorepo Template'
