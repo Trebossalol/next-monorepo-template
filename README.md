@@ -4,8 +4,15 @@ This is a simple Next.js Monorepo template I use for my projects.
 
 ## ✨ Built-In Features
 
-- 🔐 Authentication (Sign in and sign up)
-- 👤 Account Profile & Security Settings
+- 🔐 **Authentication** - Sign in and sign up
+- 👤 **Account Management** - Profile & security settings
+- 📦 **Example Database Table** - Full CRUD operations with:
+  - 📄 Pagination
+  - 🔄 Sorting
+  - 🔍 Filtering
+  - ☑️ Row selection & bulk actions
+  - 🔎 Search
+  - ⏳ Loading states
 
 ## 🛠️ Tech Stack
 
@@ -14,7 +21,9 @@ This is a simple Next.js Monorepo template I use for my projects.
 - 🎨 Shadcn/UI & Tailwind CSS
 - ✅ Next Safe Action
 - 📝 React Hook Form
+- 🎭 Ebay Nice Modal
 - 🔒 Better Auth
+- 💾 Prisma
 
 ## Architecture
 
