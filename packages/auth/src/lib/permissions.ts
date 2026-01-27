@@ -3,8 +3,7 @@ import { defaultStatements, userAc as defaultUserAc, adminAc as defaultAdminAc }
 
 const statement = {
     ...defaultStatements,
-    // Add your own permissions here
-    // Example: project: ["create", "share", "update", "delete"],
+    site: ["create", "read", "update", "delete"],
 } as const;
 
 export const ac = createAccessControl(statement);
@@ -23,7 +22,6 @@ export type RoleName = "user" | "admin";
 // Type-safe permission format: "resource:action"
 type Statement = typeof statement;
 type Resource = keyof Statement;
-type PermissionUnion = {
-    [K in Resource]: `${K & string}:${Statement[K][number] & string}`
+export type Permission = {
+    [R in Resource]: `${R & string}:${Statement[R][number] & string}`
 }[Resource];
-export type Permission = PermissionUnion;
