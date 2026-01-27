@@ -3,7 +3,6 @@ import ChangePasswordCard from '@/components/app/account/security/change-passwor
 import { getSafeAuthSession } from '@/lib/server-utils'
 
 export default async function ChangePasswordPage() {
-
     await getSafeAuthSession()
 
     return (
