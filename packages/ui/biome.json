@@ -1,7 +1,4 @@
 {
     "root": false,
-    "extends": "//",
-    "ignore": [
-        "src/components"
-    ]
+    "extends": "//"
 }

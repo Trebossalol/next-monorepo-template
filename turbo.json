@@ -22,6 +22,10 @@
         "!.next/cache/**"
       ]
     },
+    "check": {},
+    "lint:fix": {
+      "cache": false
+    },
     "lint": {
       "dependsOn": [
         "^lint"
