@@ -1,27 +1,31 @@
-import { createAccessControl } from "better-auth/plugins/access";
-import { defaultStatements, userAc as defaultUserAc, adminAc as defaultAdminAc } from "better-auth/plugins/admin/access";
+import { createAccessControl } from 'better-auth/plugins/access'
+import {
+	adminAc as defaultAdminAc,
+	defaultStatements,
+	userAc as defaultUserAc
+} from 'better-auth/plugins/admin/access'
 
 const statement = {
-    ...defaultStatements,
-    site: ["create", "read", "update", "delete"],
-} as const;
+	...defaultStatements,
+	site: ['create', 'read', 'update', 'delete']
+} as const
 
-export const ac = createAccessControl(statement);
+export const ac = createAccessControl(statement)
 
 export const user = ac.newRole({
-    ...defaultUserAc.statements
+	...defaultUserAc.statements
 })
 
 export const admin = ac.newRole({
-    ...defaultAdminAc.statements
+	...defaultAdminAc.statements
 })
 
 // Type-safe role names
-export type RoleName = "user" | "admin";
+export type RoleName = 'user' | 'admin'
 
 // Type-safe permission format: "resource:action"
-type Statement = typeof statement;
-type Resource = keyof Statement;
+type Statement = typeof statement
+type Resource = keyof Statement
 export type Permission = {
-    [R in Resource]: `${R & string}:${Statement[R][number] & string}`
-}[Resource];
+	[R in Resource]: `${R & string}:${Statement[R][number] & string}`
+}[Resource]
