@@ -96,7 +96,6 @@ export default function ChangePasswordCard() {
                     <div>
                         <Button
                             type="submit"
-                            isLoading={form.formState.isSubmitting}
                         >
                             Update Password
                         </Button>
