@@ -63,7 +63,7 @@ export default function UpdatePersonalDetailsForm({ personalDetails }: UpdatePer
             </FieldGroup>
 
             <div className='flex items-center justify-end'>
-                <Button type='submit' isLoading={form.formState.isSubmitting} size='sm'>
+                <Button type='submit' size='sm'>
                     Save changes
                 </Button>
             </div>
