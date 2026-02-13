@@ -2,6 +2,12 @@
 
 This is a simple Next.js Monorepo template I use for my projects.
 
+## Todos for this branch
+- [ ] Check in which workspaces biomejs needs to be installed
+- [ ] Optimize rules for each workspace
+- [ ] Format and lint all the workspaces
+
+
 ## ✨ Built-In Features
 
 - 🔐 **Authentication** - Sign in and sign up
