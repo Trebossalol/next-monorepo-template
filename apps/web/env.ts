@@ -4,7 +4,7 @@ import { env as commonEnv } from '@workspace/common/env'
 import { env as databaseEnv } from '@workspace/database/env'
 
 export const env = createEnv({
-    emptyStringAsUndefined: true,
-    extends: [commonEnv, authEnv, databaseEnv],
-    runtimeEnv: {}
+	emptyStringAsUndefined: true,
+	extends: [commonEnv, authEnv, databaseEnv],
+	runtimeEnv: {}
 })

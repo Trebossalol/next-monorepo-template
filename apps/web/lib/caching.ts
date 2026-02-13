@@ -1,3 +1,3 @@
 export enum CacheNamespace {
-    Sites = "sites",
+	Sites = 'sites'
 }

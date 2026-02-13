@@ -1,8 +1,8 @@
-export {};
+export {}
 
 declare global {
-	export type NextParams = Record<string, string | Array<string> | undefined>;
+	export type NextParams = Record<string, string | Array<string> | undefined>
 	export type NextSearchParams = {
-		[key: string]: string | string[] | undefined;
-	};
+		[key: string]: string | string[] | undefined
+	}
 }
