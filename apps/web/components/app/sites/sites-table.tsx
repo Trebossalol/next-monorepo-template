@@ -31,8 +31,8 @@ import { useQueryStates } from 'nuqs'
 import * as React from 'react'
 import { useMemo } from 'react'
 import { bulkRemoveSites } from '@/actions/site/bulk-remove'
+import { removeSite } from '@/actions/site/remove-site'
 import { AddSiteModal } from '@/components/app/sites/add-site-modal'
-import { RemoveSiteModal } from '@/components/app/sites/remove-site-modal'
 import { UpdateSiteModal } from '@/components/app/sites/update-site-modal'
 import { ConfirmationModal } from '@/components/generic/modals/confirmation-modal'
 import { useTransitionContext } from '@/hooks/use-transition-context'
@@ -44,12 +44,12 @@ import type { SiteDto } from '@/types/dto/site/site-dto'
 import { SortOrder } from '@/types/utils'
 import { type SortBy, searchParams } from './search-params'
 
-interface ExampleTableProps {
+interface SitesTableProps {
 	sites: SiteDto[]
 	totalCount: number
 }
 
-export function ExampleTable({ sites, totalCount }: ExampleTableProps) {
+export function SitesTable({ sites, totalCount }: SitesTableProps) {
 	const { startTransition, isLoading } = useTransitionContext()
 
 	const [
@@ -97,7 +97,15 @@ export function ExampleTable({ sites, totalCount }: ExampleTableProps) {
 	}
 
 	const handleDeleteRow = (item: SiteDto) => {
-		NiceModal.show(RemoveSiteModal, { siteId: item.id })
+		NiceModal.show(ConfirmationModal, {
+			title: 'Remove Site',
+			message: `Remove site ${item.name}?`,
+			confirmLabel: 'Delete',
+			onConfirm: () =>
+				removeSite({
+					id: item.id
+				})
+		})
 	}
 
 	const handleBulkDelete = () => {

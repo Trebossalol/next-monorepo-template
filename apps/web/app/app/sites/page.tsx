@@ -7,7 +7,7 @@ import {
 	PagePrimaryBar
 } from '@workspace/ui/components/custom/page'
 import { searchParamsCache } from '@/components/app/sites/search-params'
-import { ExampleTable } from '@/components/app/sites/sites-table'
+import { SitesTable } from '@/components/app/sites/sites-table'
 import { getSites } from '@/data/site/get-sites'
 import { TransitionProvider } from '@/hooks/use-transition-context'
 import { getSafeAuthSession } from '@/lib/server-utils'
@@ -29,7 +29,7 @@ export default async function SitesPage(props: NextPageProps) {
 			<PageBody>
 				<PageContent title="Manage Sites">
 					<TransitionProvider>
-						<ExampleTable sites={sites} totalCount={totalCount} />
+						<SitesTable sites={sites} totalCount={totalCount} />
 					</TransitionProvider>
 				</PageContent>
 			</PageBody>

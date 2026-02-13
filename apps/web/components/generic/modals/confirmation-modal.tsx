@@ -14,7 +14,7 @@ import { useEnhancedModal } from '@/hooks/use-enhanced-modal'
 export type ConfirmationModalProps = {
 	title: string
 	message: string
-	confirmLabel: string
+	confirmLabel?: string
 	onConfirm: () => void
 }
 
@@ -32,7 +32,7 @@ export const ConfirmationModal = NiceModal.create(
 					<AlertDialogFooter>
 						<AlertDialogCancel>Cancel</AlertDialogCancel>
 						<AlertDialogAction onClick={onConfirm}>
-							{confirmLabel}
+							{confirmLabel ?? 'Confirm'}
 						</AlertDialogAction>
 					</AlertDialogFooter>
 				</AlertDialogContent>
