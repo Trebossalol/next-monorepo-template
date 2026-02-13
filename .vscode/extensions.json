@@ -1,0 +1,7 @@
+{
+	"recommendations": [
+		"biomejs.biome",
+		"ms-azuretools.vscode-docker",
+		"Prisma.prisma"
+	]
+}
