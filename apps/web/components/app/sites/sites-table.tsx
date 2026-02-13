@@ -22,17 +22,17 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@workspace/ui/components/dropdown-menu"
-import { searchParams, SortBy } from "./search-params"
+import { searchParams, type SortBy } from "./search-params"
 import { cn } from "@workspace/ui/lib/utils"
 import { capitalize, getInitials } from "@workspace/common/utils/labels"
-import { SiteDto } from "@/types/dto/site/site-dto"
+import type { SiteDto } from "@/types/dto/site/site-dto"
 import { SortOrder } from "@/types/utils"
 import { useMemo } from "react"
 import { RemoveSiteModal } from "@/components/app/sites/remove-site-modal"
 import NiceModal from "@ebay/nice-modal-react"
 import { AddSiteModal } from "@/components/app/sites/add-site-modal"
 import { UpdateSiteModal } from "@/components/app/sites/update-site-modal"
-import { siteStatusSchema, SiteStatusSchema } from "@/schemas/site/site-status-schema"
+import { siteStatusSchema, type SiteStatusSchema } from "@/schemas/site/site-status-schema"
 import { useTransitionContext } from "@/hooks/use-transition-context"
 import { bulkRemoveSites } from "@/actions/site/bulk-remove"
 import { ConfirmationModal } from "@/components/generic/modals/confirmation-modal"
@@ -95,6 +95,7 @@ export function ExampleTable({ sites, totalCount }: ExampleTableProps) {
         })
     }
 
+    // biome-ignore lint/correctness/useExhaustiveDependencies: This is a memoized column definition that should not be re-created on every render
     const columns: ColumnDef<SiteDto>[] = React.useMemo(
         () => [
             createSelectionColumn<SiteDto>(),
